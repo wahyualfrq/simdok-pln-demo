@@ -702,7 +702,7 @@
                 @if (config('demo.enabled'))
                     {{-- DEMO: catatan export PDF/Excel --}}
                     <div class="px-6 pb-3 shrink-0">
-                        <x-demo-note>Contoh keluaran — PDF ini sudah disiapkan (statis) dari data dummy. Mengubah footer tidak mengubah isi PDF pada mode demo.</x-demo-note>
+                        <x-demo-note>Contoh keluaran — isi tabel PDF adalah data dummy yang tetap; hanya footer yang mengikuti isian di atas.</x-demo-note>
                     </div>
                 @endif
 

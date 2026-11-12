@@ -114,6 +114,36 @@ return [
         'fit_target'             => 0.94,
         'font_trim'              => 0.93,
         'row_height_trim'        => 0.93,
+
+        // Footer kustom (DemoPdfFooter): koordinat pt (titik asal kiri-atas) halaman TERAKHIR PDF statis, diukur dari
+        // resources/demo/pdf/monitoring_semester_{n}.pdf. cover = kotak putih penutup blok footer lama (di antara tabel dan
+        // "Notes"); baseline = garis dasar teks; left/right = pusat & lebar tiap blok (rata tengah). Dibuat ulang bila PDF statis berubah.
+        'footer_layout' => [
+            1 => [
+                'font_size'   => 8.8,
+                'line_height' => 10.75,
+                'cover'       => [
+                    ['x' => 45,  'y' => 430, 'w' => 260, 'h' => 130],
+                    ['x' => 380, 'y' => 430, 'w' => 193, 'h' => 130],
+                ],
+                'left'     => ['center' => 175.38, 'width' => 230],
+                'right'    => ['center' => 490.75, 'width' => 160],
+                'baseline' => ['lokasi_tanggal' => 459.92, 'label' => 470.66, 'jabatan' => 481.41, 'nama' => 545.88],
+                'max_lines' => ['jabatan' => 4, 'nama' => 2],
+            ],
+            2 => [
+                'font_size'   => 8.8,
+                'line_height' => 10.75,
+                'cover'       => [
+                    ['x' => 45,  'y' => 430, 'w' => 260, 'h' => 130],
+                    ['x' => 380, 'y' => 430, 'w' => 193, 'h' => 130],
+                ],
+                'left'     => ['center' => 175.38, 'width' => 230],
+                'right'    => ['center' => 490.75, 'width' => 160],
+                'baseline' => ['lokasi_tanggal' => 459.92, 'label' => 470.66, 'jabatan' => 481.41, 'nama' => 545.88],
+                'max_lines' => ['jabatan' => 4, 'nama' => 2],
+            ],
+        ],
     ],
 
     /*

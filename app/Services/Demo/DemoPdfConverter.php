@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Services\Demo;
 
+use App\Services\FooterSettingsService;
 use Dompdf\Adapter\CPDF;
 use Dompdf\Dompdf;
+use Illuminate\Support\Facades\Log;
 use Dompdf\Options;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
@@ -49,10 +51,29 @@ class DemoPdfConverter
      */
     public static function convert(string $xlsxPath, string $pdfPath): void
     {
-        $source = base_path('resources/demo/pdf/monitoring_semester_' . self::detectSemester($xlsxPath) . '.pdf');
+        $semester = self::detectSemester($xlsxPath);
+        $source   = base_path('resources/demo/pdf/monitoring_semester_' . $semester . '.pdf');
 
-        if (! is_file($source) || ! @copy($source, $pdfPath)) {
-            throw new RuntimeException('PDF contoh demo tidak ditemukan atau tidak dapat disalin.');
+        if (! is_file($source)) {
+            throw new RuntimeException('PDF contoh demo tidak ditemukan.');
+        }
+
+        // Footer = default panel → PDF statis apa adanya. Footer diubah → salinan PDF statis diberi footer baru
+        // (FPDI, PHP murni) di halaman terakhir; bila gagal, jatuh ke PDF statis.
+        $footer  = self::customFooter();
+        $stamped = false;
+
+        if ($footer !== null) {
+            try {
+                DemoPdfFooter::stamp($source, $pdfPath, $semester, $footer);
+                $stamped = is_file($pdfPath) && filesize($pdfPath) > 0;
+            } catch (\Throwable $e) {
+                Log::warning('DemoPdfConverter: footer kustom gagal, memakai PDF statis: ' . $e->getMessage());
+            }
+        }
+
+        if (! $stamped && ! @copy($source, $pdfPath)) {
+            throw new RuntimeException('PDF contoh demo tidak dapat disalin.');
         }
 
         // Ekspor Excel memakai alur laporan yang sama (createReport selalu memanggil convertToPdf) tetapi
@@ -60,6 +81,26 @@ class DemoPdfConverter
         if (! request()->routeIs('monitoring.excel.export')) {
             usleep((int) config('demo.pdf.fake_delay_ms', 1800) * 1000);
         }
+    }
+
+    /**
+     * Footer dari request (dinormalisasi persis seperti controller/panel), atau null bila sama dengan
+     * footer default panel (normalize([])), tidak ada footer pada request, atau ini ekspor Excel.
+     *
+     * @return array<string, string>|null
+     */
+    private static function customFooter(): ?array
+    {
+        $request = request();
+
+        if (! $request->has('footer') || $request->routeIs('monitoring.excel.export')) {
+            return null;
+        }
+
+        $service = app(FooterSettingsService::class);
+        $footer  = $service->normalize((array) $request->input('footer', []));
+
+        return $footer === $service->normalize([]) ? null : $footer;
     }
 
     /**
