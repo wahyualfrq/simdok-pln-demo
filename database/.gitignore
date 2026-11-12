@@ -1,0 +1,3 @@
+*.sqlite*
+# DEMO: database demo (data dummy saja) di-commit di repo demo; database.sqlite asli tetap diabaikan.
+!demo.sqlite

@@ -1,0 +1,216 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+/**
+ * SIMDOK — Smart Document Automation Dashboard
+ * Design System: PLN Brand Colors + Inter Font
+ * Sesuai: 07_UI_UX_GUIDELINE.md
+ */
+
+@theme {
+    /* -------------------------------------------------------
+     * Typography — Inter (Google Fonts)
+     * ----------------------------------------------------- */
+    --font-inter: 'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+    /* -------------------------------------------------------
+     * Color Palette — PLN Brand
+     * Sesuai 07_UI_UX_GUIDELINE.md Section 3
+     * ----------------------------------------------------- */
+
+    /* PLN Blue — Primary */
+    --color-pln-blue: #0F6CBD;
+    --color-pln-blue-50: #EFF6FF;
+    --color-pln-blue-100: #DBEAFE;
+    --color-pln-blue-500: #0F6CBD;
+    --color-pln-blue-600: #0d5fa6;
+    --color-pln-blue-700: #0a4f8f;
+
+    /* Success */
+    --color-success: #16A34A;
+    --color-success-50: #F0FDF4;
+    --color-success-100: #DCFCE7;
+
+    /* Danger */
+    --color-danger: #DC2626;
+    --color-danger-50: #FEF2F2;
+    --color-danger-100: #FEE2E2;
+
+    /* Warning */
+    --color-warning: #F59E0B;
+    --color-warning-50: #FFFBEB;
+
+    /* Background */
+    --color-app-bg: #F8FAFC;
+
+    /* Border Radius */
+    --radius-2xl: 1rem;
+    --radius-3xl: 1.25rem;
+}
+
+/* -------------------------------------------------------
+ * Base Styles
+ * ----------------------------------------------------- */
+@layer base {
+    html {
+        font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+        background-color: #F8FAFC;
+        color: #1e293b;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+}
+
+/* -------------------------------------------------------
+ * Component Utilities
+ * ----------------------------------------------------- */
+@layer utilities {
+    /* PLN Blue background */
+    .bg-pln-blue {
+        background-color: #0F6CBD;
+    }
+    .hover\:bg-pln-blue:hover {
+        background-color: #0F6CBD;
+    }
+    .text-pln-blue {
+        color: #0F6CBD;
+    }
+    .border-pln-blue {
+        border-color: #0F6CBD;
+    }
+    .ring-pln-blue {
+        --tw-ring-color: #0F6CBD;
+    }
+    .focus\:ring-pln-blue:focus {
+        --tw-ring-color: #0F6CBD;
+    }
+    .focus\:border-pln-blue:focus {
+        border-color: #0F6CBD;
+    }
+    .hover\:bg-blue-700:hover {
+        background-color: #0a4f8f;
+    }
+
+    /* Font */
+    .font-inter {
+        font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    }
+
+    /* Smooth transitions */
+    .transition-colors {
+        transition-property: color, background-color, border-color;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        transition-duration: 150ms;
+    }
+
+    /* Fade in animation */
+    .animate-fade-in {
+        animation: fadeIn 0.2s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-4px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}
+
+/* -------------------------------------------------------
+ * Skeleton Loading — Shimmer Effect
+ * Tampilkan saat halaman sedang memuat data API.
+ * Tidak menggunakan spinner penuh, hanya shimmer per elemen.
+ * ----------------------------------------------------- */
+@layer utilities {
+    .skeleton {
+        background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+        background-size: 200% 100%;
+        animation: skeleton-shimmer 1.4s ease-in-out infinite;
+        border-radius: 0.5rem;
+    }
+
+    @keyframes skeleton-shimmer {
+        0%   { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+    }
+
+    .skeleton-card {
+        background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+        background-size: 200% 100%;
+        animation: skeleton-shimmer 1.4s ease-in-out infinite;
+        border-radius: 1rem;
+        min-height: 5rem;
+    }
+
+    .skeleton-row {
+        background: linear-gradient(90deg, #f8fafc 25%, #f1f5f9 50%, #f8fafc 75%);
+        background-size: 200% 100%;
+        animation: skeleton-shimmer 1.4s ease-in-out infinite;
+        border-radius: 0.25rem;
+        height: 0.875rem;
+    }
+
+    .skeleton-text {
+        background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+        background-size: 200% 100%;
+        animation: skeleton-shimmer 1.4s ease-in-out infinite;
+        border-radius: 0.25rem;
+        height: 0.75rem;
+    }
+
+    .skeleton-circle {
+        background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+        background-size: 200% 100%;
+        animation: skeleton-shimmer 1.4s ease-in-out infinite;
+        border-radius: 9999px;
+    }
+}
+
+/* -------------------------------------------------------
+ * Skeleton Visibility Control
+ * JS akan mengontrol class .sk-hidden untuk menyembunyikan skeleton
+ * dan class .sk-visible untuk menampilkan konten nyata.
+ * Threshold: > 300ms tampilkan skeleton, < 300ms tidak perlu.
+ * ----------------------------------------------------- */
+@layer utilities {
+    .sk-content { transition: opacity 0.25s ease; }
+    .sk-content.is-loading { display: none !important; }
+    .is-hidden { display: none !important; }
+}
+
+/* -------------------------------------------------------
+ * Page Transition — Top Loading Bar
+ * Thin progress bar di bawah header saat navigasi antar halaman.
+ * ----------------------------------------------------- */
+@layer utilities {
+    #page-progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 2px;
+        background: linear-gradient(90deg, #0F6CBD, #38bdf8);
+        z-index: 9999;
+        width: 0%;
+        opacity: 0;
+        transition: width 0.3s ease, opacity 0.2s ease;
+        pointer-events: none;
+    }
+
+    #page-progress-bar.is-loading {
+        opacity: 1;
+    }
+}

@@ -1,0 +1,38 @@
+*.log
+.DS_Store
+.env
+.env.backup
+.env.production
+.phpactor.json
+.phpunit.result.cache
+/.codex
+/.cursor/
+/.idea
+/.nova
+/.phpunit.cache
+/.vscode
+/.zed
+/auth.json
+/node_modules
+# DEMO: /public/build SENGAJA tidak diabaikan — aset Vite hasil build di-commit di repo demo (Vercel tidak menjalankan npm build).
+/public/fonts-manifest.dev.json
+/public/hot
+/public/storage
+/storage/*.key
+/storage/pail
+/vendor
+_ide_helper.php
+Homestead.json
+Homestead.yaml
+Thumbs.db
+
+# Google Credentials & Token — JANGAN pernah di-commit!
+/storage/app/google/service-account.json
+/storage/app/google/oauth-client.json
+/storage/app/google/token.json
+
+# Compiled assets
+# DEMO: /public/build di-commit (lihat catatan di atas)
+/data/
+/scratch/
+

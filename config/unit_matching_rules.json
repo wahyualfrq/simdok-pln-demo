@@ -1,0 +1,432 @@
+{
+  "parents": {
+    "UNIT INDUK DISTRIBUSI S2JB": {
+      "aliases": ["KANTOR UID", "K UID", "UID", "KANTOR"],
+      "mode": "file"
+    },
+    "PLN UP2D S2JB": {
+      "aliases": ["UP2D S2JB", "UP2D"],
+      "mode": "file"
+    },
+    "PLN UP2K SUMSEL": {
+      "aliases": ["UP2K SUMSEL"],
+      "mode": "file"
+    },
+    "PLN UP2K JAMBI": {
+      "aliases": ["UP2K JAMBI"],
+      "mode": "file"
+    },
+    "PLN UP2K BENGKULU": {
+      "aliases": ["UP2K BENGKULU", "UP2K BKL"],
+      "mode": "file"
+    },
+    "PLN UP3 PALEMBANG": {
+      "aliases": ["UP3 PALEMBANG", "PALEMBANG"],
+      "mode": "folder"
+    },
+    "PLN UP3 JAMBI": {
+      "aliases": ["UP3 JAMBI", "JAMBI"],
+      "mode": "folder"
+    },
+    "PLN UP3 MUARA BUNGO": {
+      "aliases": ["UP3 MUARA BUNGO", "MUARA BUNGO", "MBO"],
+      "mode": "folder"
+    },
+    "PLN UP3 LUBUK LINGGAU": {
+      "aliases": ["UP3 LUBUK LINGGAU", "LUBUKLINGGAU", "LLG"],
+      "mode": "folder"
+    },
+    "PLN UP3 LAHAT": {
+      "aliases": ["UP3 LAHAT", "LAHAT"],
+      "mode": "folder"
+    },
+    "PLN UP3 OGAN ILIR": {
+      "aliases": ["UP3 OGAN ILIR", "OGAN ILIR", "OGI"],
+      "mode": "folder"
+    },
+    "PLN UP3 BENGKULU": {
+      "aliases": ["UP3 BENGKULU", "BENGKULU"],
+      "mode": "folder"
+    }
+  },
+  "rules": [
+    {
+      "unit": "GM",
+      "parent": "UNIT INDUK DISTRIBUSI S2JB",
+      "mode": "file",
+      "match": {
+        "type": "keyword",
+        "keywords": ["GM", "GM IG", "GM S2JB", "DISEMINASI GM", "STORY GM"]
+      }
+    },
+    {
+      "unit": "SM PERENCANAAN",
+      "parent": "UNIT INDUK DISTRIBUSI S2JB",
+      "mode": "file",
+      "match": {
+        "type": "keyword",
+        "keywords": ["SM PERENCANAAN", "SM REN"]
+      }
+    },
+    {
+      "unit": "SM DISTRIBUSI",
+      "parent": "UNIT INDUK DISTRIBUSI S2JB",
+      "mode": "file",
+      "match": {
+        "type": "keyword",
+        "keywords": ["SM DISTRIBUSI", "SM DIST"]
+      }
+    },
+    {
+      "unit": "SM NIAGA DAN MANJ PELANGGAN",
+      "parent": "UNIT INDUK DISTRIBUSI S2JB",
+      "mode": "file",
+      "match": {
+        "type": "keyword",
+        "keywords": ["SM NIAGA DAN MANJ PELANGGAN", "SM AGA", "SM NIAGA"]
+      }
+    },
+    {
+      "unit": "SM KKU",
+      "parent": "UNIT INDUK DISTRIBUSI S2JB",
+      "mode": "file",
+      "match": {
+        "type": "keyword",
+        "keywords": ["SM KKU"]
+      }
+    },
+    {
+      "unit": "PJ REN DAN",
+      "parent": "UNIT INDUK DISTRIBUSI S2JB",
+      "mode": "file",
+      "match": {
+        "type": "keyword",
+        "keywords": ["PJ REN DAN", "MAN RENDAN", "RENDAN"]
+      }
+    },
+    {
+      "unit": "MAN LAKSDA",
+      "parent": "UNIT INDUK DISTRIBUSI S2JB",
+      "mode": "file",
+      "match": {
+        "type": "keyword",
+        "keywords": ["MAN LAKSDA", "LAKSDA"]
+      }
+    },
+    {
+      "unit": "MUP2D S2JB",
+      "parent": "PLN UP2D S2JB",
+      "mode": "file",
+      "match": {
+        "type": "keyword",
+        "keywords": ["MUP2D", "MUP2D S2JB", "MANAGER PLN UP2D S2JB"]
+      }
+    },
+    {
+      "unit": "TL LAKDAN",
+      "parent": "PLN UP2D S2JB",
+      "mode": "file",
+      "match": {
+        "type": "keyword",
+        "keywords": ["TL LAKDAN", "TLLAKDAN", "LAKDAN", "TL LAKSDAN", "LAKSDA", "TL LAKSDA"]
+      }
+    },
+    {
+      "unit": "MUP2K SUMSEL",
+      "parent": "PLN UP2K SUMSEL",
+      "mode": "file",
+      "match": {
+        "type": "keyword",
+        "keywords": ["MUP2K", "MUP2K SUMSEL"]
+      }
+    },
+    {
+      "unit": "MUP2K JAMBI",
+      "parent": "PLN UP2K JAMBI",
+      "mode": "file",
+      "match": {
+        "type": "keyword",
+        "keywords": ["MUP2K", "MUP2K JAMBI"]
+      }
+    },
+    {
+      "unit": "MUP2K BENGKULU",
+      "parent": "PLN UP2K BENGKULU",
+      "mode": "file",
+      "match": {
+        "type": "keyword",
+        "keywords": ["MUP2K", "MUP2K BENGKULU", "MUP2K BKL"]
+      }
+    },
+    {
+      "unit": "a. MULP KENTEN",
+      "parent": "PLN UP3 PALEMBANG",
+      "mode": "folder",
+      "match": {
+        "type": "folder",
+        "aliases": ["ULP KENTEN", "ULP KNT", "KNT", "MULP KENTEN"]
+      }
+    },
+    {
+      "unit": "b. MULP SUKARAMI",
+      "parent": "PLN UP3 PALEMBANG",
+      "mode": "folder",
+      "match": {
+        "type": "folder",
+        "aliases": ["ULP SUKARAMI", "ULP SKR", "SKR", "MULP SUKARAMI"]
+      }
+    },
+    {
+      "unit": "c. MULP RIVAI",
+      "parent": "PLN UP3 PALEMBANG",
+      "mode": "folder",
+      "match": {
+        "type": "folder",
+        "aliases": ["ULP RIVAI", "ULP RVI", "RVI", "MULP RIVAI"]
+      }
+    },
+    {
+      "unit": "d. MULP AMPERA",
+      "parent": "PLN UP3 PALEMBANG",
+      "mode": "folder",
+      "match": {
+        "type": "folder",
+        "aliases": ["ULP AMPERA", "ULP AMP", "AMP", "MULP AMPERA"]
+      }
+    },
+    {
+      "unit": "e. MULP MARIANA",
+      "parent": "PLN UP3 PALEMBANG",
+      "mode": "folder",
+      "match": {
+        "type": "folder",
+        "aliases": ["ULP MARIANA", "ULP MRN", "MRN", "MULP MARIANA"]
+      }
+    },
+    {
+      "unit": "f. MULP PANGKALAN BALAI",
+      "parent": "PLN UP3 PALEMBANG",
+      "mode": "folder",
+      "match": {
+        "type": "folder",
+        "aliases": ["ULP PANGKALAN BALAI", "ULP PKLBALAI", "PBALAI", "MULP PANGKALAN BALAI"]
+      }
+    },
+    {
+      "unit": "g. MULP SEKAYU",
+      "parent": "PLN UP3 PALEMBANG",
+      "mode": "folder",
+      "match": {
+        "type": "folder",
+        "aliases": ["ULP SEKAYU", "ULP SKY", "SKY", "MULP SEKAYU"]
+      }
+    },
+    {
+      "unit": "h. MULP SUNGAI LILIN",
+      "parent": "PLN UP3 PALEMBANG",
+      "mode": "folder",
+      "match": {
+        "type": "folder",
+        "aliases": ["ULP SUNGAI LILIN", "ULP SGL", "SGL", "MULP SUNGAI LILIN"]
+      }
+    },
+    {
+      "unit": "MULP BATURAJA",
+      "parent": "PLN UP3 LAHAT",
+      "mode": "folder",
+      "match": {
+        "type": "folder",
+        "aliases": ["ULP BATURAJA", "ULP BTA", "BTA"]
+      }
+    },
+    {
+      "unit": "MULP LEMBAYUNG",
+      "parent": "PLN UP3 LAHAT",
+      "mode": "folder",
+      "match": {
+        "type": "folder",
+        "aliases": ["ULP LEMBAYUNG", "ULP LBY", "LBY"]
+      }
+    },
+    {
+      "unit": "MULP MUARADUA",
+      "parent": "PLN UP3 LAHAT",
+      "mode": "folder",
+      "match": {
+        "type": "folder",
+        "aliases": ["ULP MUARADUA", "ULP MDA", "MDA"]
+      }
+    },
+    {
+      "unit": "MULP MUARA ENIM",
+      "parent": "PLN UP3 LAHAT",
+      "mode": "folder",
+      "match": {
+        "type": "folder",
+        "aliases": ["ULP MUARA ENIM", "ULP ME", "ME"]
+      }
+    },
+    {
+      "unit": "MULP MARTAPURA",
+      "parent": "PLN UP3 LAHAT",
+      "mode": "folder",
+      "match": {
+        "type": "folder",
+        "aliases": ["ULP MARTAPURA", "ULP MTP", "MTP"]
+      }
+    },
+    {
+      "unit": "MULP PAGAR ALAM",
+      "parent": "PLN UP3 LAHAT",
+      "mode": "folder",
+      "match": {
+        "type": "folder",
+        "aliases": ["ULP PAGAR ALAM", "ULP PGA", "PGA"]
+      }
+    },
+    {
+      "unit": "MULP BANGKO",
+      "parent": "PLN UP3 MUARA BUNGO",
+      "mode": "folder",
+      "match": {
+        "type": "folder",
+        "aliases": ["ULP BANGKO", "ULP BKO", "BKO"]
+      }
+    },
+    {
+      "unit": "MULP KOTA BUNGO",
+      "parent": "PLN UP3 MUARA BUNGO",
+      "mode": "folder",
+      "match": {
+        "type": "folder",
+        "aliases": ["ULP KOTA BUNGO", "ULP BKT", "BKT"]
+      }
+    },
+    {
+      "unit": "MULP KERSIK TUO",
+      "parent": "PLN UP3 MUARA BUNGO",
+      "mode": "folder",
+      "match": {
+        "type": "folder",
+        "aliases": ["ULP KERSIK TUO", "ULP KST", "KST"]
+      }
+    },
+    {
+      "unit": "MULP RIMBO BUJANG",
+      "parent": "PLN UP3 MUARA BUNGO",
+      "mode": "folder",
+      "match": {
+        "type": "folder",
+        "aliases": ["ULP RIMBO BUJANG", "ULP RBB", "RBB"]
+      }
+    },
+    {
+      "unit": "MULP SUNGAI PENUH",
+      "parent": "PLN UP3 MUARA BUNGO",
+      "mode": "folder",
+      "match": {
+        "type": "folder",
+        "aliases": ["ULP SUNGAI PENUH", "ULP SPN", "SPN"]
+      }
+    },
+    {
+      "unit": "MULP SAROLANGUN",
+      "parent": "PLN UP3 MUARA BUNGO",
+      "mode": "folder",
+      "match": {
+        "type": "folder",
+        "aliases": ["ULP SAROLANGUN", "ULP SRL", "SRL"]
+      }
+    },
+    {
+      "unit": "MULP MUARA TEBO",
+      "parent": "PLN UP3 MUARA BUNGO",
+      "mode": "folder",
+      "match": {
+        "type": "folder",
+        "aliases": ["ULP MUARA TEBO", "ULP TBO", "TBO"]
+      }
+    },
+    {
+      "unit": "MULP INDRALAYA",
+      "parent": "PLN UP3 OGAN ILIR",
+      "mode": "folder",
+      "match": {
+        "type": "folder",
+        "aliases": ["ULP INDRALAYA", "ULP IND", "IND"]
+      }
+    },
+    {
+      "unit": "MULP KAYU AGUNG",
+      "parent": "PLN UP3 OGAN ILIR",
+      "mode": "folder",
+      "match": {
+        "type": "folder",
+        "aliases": ["ULP KAYU AGUNG", "ULP KYA", "KYA"]
+      }
+    },
+    {
+      "unit": "MULP PRABUMULIH",
+      "parent": "PLN UP3 OGAN ILIR",
+      "mode": "folder",
+      "match": {
+        "type": "folder",
+        "aliases": ["ULP PRABUMULIH", "ULP PRB", "PRB"]
+      }
+    },
+    {
+      "unit": "MULP TUGU MULYO",
+      "parent": "PLN UP3 OGAN ILIR",
+      "mode": "folder",
+      "match": {
+        "type": "folder",
+        "aliases": ["ULP TUGU MULYO", "ULP TGM", "TGM"]
+      }
+    },
+    {
+      "unit": "MULP LUBUKLINGGAU",
+      "parent": "PLN UP3 LUBUK LINGGAU",
+      "mode": "folder",
+      "match": {
+        "type": "folder",
+        "aliases": ["ULP LUBUKLINGGAU", "ULP LLG", "LLG"]
+      }
+    },
+    {
+      "unit": "MULP MUARA BELITI",
+      "parent": "PLN UP3 LUBUK LINGGAU",
+      "mode": "folder",
+      "match": {
+        "type": "folder",
+        "aliases": ["ULP MUARA BELITI", "ULP MBT", "MBT"]
+      }
+    },
+    {
+      "unit": "MULP MURATARA",
+      "parent": "PLN UP3 LUBUK LINGGAU",
+      "mode": "folder",
+      "match": {
+        "type": "folder",
+        "aliases": ["ULP MURATARA", "ULP MRT", "MRT"]
+      }
+    },
+    {
+      "unit": "MULP PENDOPO",
+      "parent": "PLN UP3 LUBUK LINGGAU",
+      "mode": "folder",
+      "match": {
+        "type": "folder",
+        "aliases": ["ULP PENDOPO", "ULP PDP", "PDP"]
+      }
+    },
+    {
+      "unit": "MULP TEBING TINGGI",
+      "parent": "PLN UP3 LUBUK LINGGAU",
+      "mode": "folder",
+      "match": {
+        "type": "folder",
+        "aliases": ["ULP TEBING TINGGI", "ULP TBT", "TBT"]
+      }
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+# DEMO: berkas yang TIDAK diunggah ke Vercel (berlaku untuk upload CLI; pada integrasi Git yang
+# dideploy adalah isi repo publik yang sudah bersih). Lihat rules/15_VERCEL_DEPLOYMENT.md §2.3.
+
+# Secret & data nyata
+.env
+.env.*
+!.env.example
+!.env.vercel.example
+.git
+data
+scratch
+storage/logs
+storage/framework
+storage/app
+database/database.sqlite
+temp_sheet.xlsx
+run_sync.php
+.phpunit.result.cache
+
+# Dependensi (composer install dijalankan oleh runtime saat build; aset Vite sudah di-commit)
+vendor
+node_modules
+
+# Tes & berkas deploy aplikasi asli
+tests
+Dockerfile
+docker-entrypoint.sh
+.dockerignore
+render.yaml
+
+# Dokumen kerja AI/aturan internal
+DEMO_AUDIT.md
+AGENTS.md
+CLAUDE.md
+rules/13_DEMO_SCOPE_AND_GUARDRAILS.md
+rules/14_DEMO_MOCK_SPEC.md
+rules/15_VERCEL_DEPLOYMENT.md
+rules/16_MASTER_PROMPT_DEMO.md
