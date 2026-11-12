@@ -1,6 +1,7 @@
 {
   "framework": null,
-  "outputDirectory": "public",
+  "buildCommand": "npm run build && rm -rf vercel-static && mkdir -p vercel-static && cp -r public/build vercel-static/build && cp -r public/images vercel-static/images && cp public/favicon.ico public/robots.txt vercel-static/",
+  "outputDirectory": "vercel-static",
   "functions": {
     "api/index.php": { "runtime": "vercel-php@0.9.0", "maxDuration": 60 }
   },

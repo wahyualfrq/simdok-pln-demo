@@ -36,3 +36,6 @@ Thumbs.db
 /data/
 /scratch/
 
+
+# DEMO: hasil build aset statis Vercel (lihat buildCommand di vercel.json) — jangan di-commit.
+vercel-static/
