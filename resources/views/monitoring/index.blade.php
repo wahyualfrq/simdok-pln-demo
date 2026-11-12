@@ -270,11 +270,6 @@
         </div>
     </div>
 
-    @if (config('demo.enabled'))
-        {{-- DEMO: catatan simulasi sync (Sync / Full Sync) --}}
-        <x-demo-note class="mb-5">Simulasi pemindaian — tidak membaca Google Drive sungguhan.</x-demo-note>
-    @endif
-
     {{-- ===== Real Content ===== --}}
     <div data-content class="sk-content">
 

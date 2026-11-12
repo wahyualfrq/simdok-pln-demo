@@ -123,8 +123,8 @@ return [
     */
 
     'banner' => [
-        'title'   => 'MODE DEMONSTRASI',
-        'message' => 'Ini versi demo untuk portofolio. Data bersifat dummy, integrasi Google Drive disimulasikan, dan aplikasi ini bukan sistem resmi PT PLN. Perubahan data bersifat sementara.',
+        'title'   => 'Mode demo',
+        'message' => 'data dummy, bukan sistem resmi PT PLN.',
     ],
 
     'footer_label' => 'Versi Demo',

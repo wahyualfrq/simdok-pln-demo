@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Demo;
 
+use Illuminate\Support\Facades\DB;
 use RuntimeException;
 
 /**
@@ -72,7 +73,7 @@ class DemoDriveStore
 
         usort($result, fn (array $a, array $b) => strcasecmp($a['name'], $b['name']));
 
-        return $result;
+        return $this->applyUnitStatus($parentId, $result);
     }
 
     /**
@@ -208,6 +209,77 @@ class DemoDriveStore
             $overlay['checklist'][$key] = $value;
         }
         $this->saveOverlay($overlay);
+    }
+
+    // ─────────────────────────────────────────────────────────
+    // ISI FOLDER DITURUNKAN DARI STATUS SEL MONITORING
+    // ─────────────────────────────────────────────────────────
+
+    /**
+     * Sumber kebenaran = status sel (monitoring_statuses.status) per unit × bulan:
+     *   - INCOMPLETE : folder unit KOSONG (semua file, termasuk hasil upload, disembunyikan);
+     *   - COMPLETE / PENDING : file nyata tampil; bila unit tak punya file nyata, file dummy
+     *     LATEN (deterministik) ditampilkan;
+     * File laten tidak pernah tampil di folder yang tidak punya baris monitoring.
+     * Pada folder bersama (mode file: satu folder region untuk beberapa unit) aturan diterapkan per unit
+     * lewat nama unit pemilik file; file hasil upload (tanpa pemilik) tampil selama ada unit non-INCOMPLETE.
+     *
+     * @param  list<array>  $nodes
+     * @return list<array>
+     */
+    private function applyUnitStatus(string $parentId, array $nodes): array
+    {
+        if (! array_filter($nodes, fn (array $n) => ! $n['folder'])) {
+            return $nodes;
+        }
+
+        try {
+            $rows = DB::table('monitoring_statuses')->where('folder_id', $parentId)->pluck('status', 'unit_original')->all();
+        } catch (\Throwable) {
+            $rows = [];
+        }
+
+        if ($rows === []) {
+            return array_values(array_filter($nodes, fn (array $n) => $n['folder'] || empty($n['latent'])));
+        }
+
+        $statuses      = array_map('strtoupper', $rows);
+        $allIncomplete = ! array_filter($statuses, fn (string $s) => $s !== 'INCOMPLETE');
+
+        $real  = [];
+        $loose = 0;
+        foreach ($nodes as $n) {
+            if ($n['folder'] || ! empty($n['latent'])) {
+                continue;
+            }
+            if (isset($n['unit'])) {
+                $real[$n['unit']] = ($real[$n['unit']] ?? 0) + 1;
+            } else {
+                $loose++;
+            }
+        }
+        $looseForUnit = count($statuses) === 1 ? $loose : 0;
+
+        return array_values(array_filter($nodes, function (array $n) use ($statuses, $allIncomplete, $real, $looseForUnit) {
+            if ($n['folder']) {
+                return true;
+            }
+
+            $unit = $n['unit'] ?? null;
+            if ($unit === null) {
+                return ! $allIncomplete; // file hasil upload
+            }
+
+            $status = $statuses[$unit] ?? null;
+            if ($status === null) {
+                return empty($n['latent']);
+            }
+            if ($status === 'INCOMPLETE') {
+                return false;
+            }
+
+            return empty($n['latent']) || (($real[$unit] ?? 0) === 0 && $looseForUnit === 0);
+        }));
     }
 
     // ─────────────────────────────────────────────────────────

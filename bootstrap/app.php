@@ -16,6 +16,9 @@ return Application::configure(basePath: dirname(__DIR__))
         // env() dipakai (bukan config) karena config belum termuat di titik ini.
         if (filter_var(env('DEMO_MODE', false), FILTER_VALIDATE_BOOLEAN)) {
             $middleware->trustProxies(at: '*');
+
+            // DEMO: basis data + cache per sesi pengunjung (setelah StartSession). Lihat DemoSessionIsolation.
+            $middleware->web(append: [\App\Http\Middleware\DemoSessionIsolation::class]);
         }
     })
     ->withExceptions(function (Exceptions $exceptions): void {

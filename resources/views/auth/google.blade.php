@@ -224,7 +224,6 @@
 
                     @if (config('demo.enabled'))
                     {{-- DEMO: langkah simulasi milik SIMDOK (bukan tampilan/logo Google). Tombol memakai alur route connect → callback demo. --}}
-                    <x-demo-note class="mb-4"><strong>SIMULASI — tidak terhubung ke Google.</strong> Tombol di bawah hanya menandai akun demo sebagai terhubung; tidak ada login atau akses ke Google yang sebenarnya.</x-demo-note>
                     <a id="btn-connect-google"
                        href="{{ route('auth.google.connect') }}"
                        class="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-xl bg-pln-blue text-white text-sm font-semibold hover:bg-blue-700 transition-colors duration-150 shadow-sm shadow-blue-200">
@@ -262,7 +261,6 @@
 
         @if (config('demo.enabled'))
         {{-- DEMO: info penyimpanan token pada versi asli tidak berlaku di demo --}}
-        <x-demo-note class="mt-4"><strong>SIMULASI — tidak terhubung ke Google.</strong> Pada versi demo tidak ada token atau berkas kredensial yang disimpan; status koneksi dan Root Folder hanya tersimpan sementara sebagai data demo.</x-demo-note>
         @else
         {{-- Info Box --}}
         <div class="mt-4 p-4 bg-blue-50/50 rounded-xl border border-blue-100">

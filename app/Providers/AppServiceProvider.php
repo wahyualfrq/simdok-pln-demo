@@ -4,8 +4,10 @@ namespace App\Providers;
 
 // DEMO: Fake service untuk versi demo (di-bind hanya saat config('demo.enabled'))
 use App\Models\FolderGenerationLog;
+use App\Models\MonitoringStatus;
 use App\Models\MonitoringSyncLog;
 use App\Services\Demo\DemoProgressSimulator;
+use App\Services\Demo\DemoUnitStatus;
 use App\Services\Demo\FakeDriveMonitoringSyncService;
 use App\Services\Demo\FakeFolderGeneratorService;
 use App\Services\Demo\FakeGoogleDriveService;
@@ -61,6 +63,14 @@ class AppServiceProvider extends ServiceProvider
             MonitoringSyncLog::retrieved(fn (MonitoringSyncLog $log) => app(DemoProgressSimulator::class)->advanceSync($log));
             FolderGenerationLog::retrieved(fn (FolderGenerationLog $log) => app(DemoProgressSimulator::class)->advanceGeneration($log));
             FolderGenerationLog::created(fn (FolderGenerationLog $log) => app(DemoProgressSimulator::class)->runGenerationNow($log));
+
+            // Status sel yang diubah lewat jalur asli (dropdown status folder) berlaku untuk seluruh unit di folder itu
+            // dan isi folder Drive ikut diturunkan darinya. Lihat DemoUnitStatus.
+            MonitoringStatus::updated(function (MonitoringStatus $row) {
+                if ($row->wasChanged('status') && ! empty($row->folder_id)) {
+                    app(DemoUnitStatus::class)->setFolderStatus((string) $row->folder_id, strtoupper((string) $row->status));
+                }
+            });
         }
     }
 }

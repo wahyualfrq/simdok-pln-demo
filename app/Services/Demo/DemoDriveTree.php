@@ -124,7 +124,7 @@ class DemoDriveTree
 
         $nodes = [];
         $slots = [];
-        $seq   = ['month' => 0, 'region' => 0, 'unit' => 0, 'file' => 0, 'folder' => 0];
+        $seq   = ['month' => 0, 'region' => 0, 'unit' => 0, 'file' => 0, 'latent' => 0, 'folder' => 0];
         $cfg   = (array) config('demo.drive');
 
         $rootId = (string) config('demo.root_folder_id');
@@ -165,11 +165,11 @@ class DemoDriveTree
                         // MODE FOLDER: setiap unit = subfolder berisi file.
                         $unitId = $this->id('unit', $seq);
                         $nodes[$unitId] = $this->node($unitId, (string) $unitName, true, $regionId, 'unit', $this->stamp($period, 3), $this->stamp($period, $this->hash($key)));
-                        $files    = $this->addFiles($nodes, $seq, $unitId, $period, $key, '', isset($filled[$key]));
+                        $files    = $this->addFiles($nodes, $seq, $unitId, $period, $key, '', isset($filled[$key]), (string) $unitName);
                         $folderId = $unitId;
                     } else {
                         // MODE FILE: file langsung di folder region; nama berawalan nama unit.
-                        $files    = $this->addFiles($nodes, $seq, $regionId, $period, $key, (string) $unitName . ' - ', isset($filled[$key]));
+                        $files    = $this->addFiles($nodes, $seq, $regionId, $period, $key, (string) $unitName . ' - ', isset($filled[$key]), (string) $unitName);
                         $folderId = $regionId;
                     }
 
@@ -225,13 +225,15 @@ class DemoDriveTree
     }
 
     /**
-     * Menambahkan file dummy ke sebuah folder bila unit "sudah upload" (deterministik).
+     * Menambahkan file dummy ke sebuah folder. Unit "sudah upload" mendapat file nyata; unit lain
+     * mendapat file LATEN (id demo_latent_*, flag 'latent') yang tidak tampil di daftar folder sampai
+     * status unit di Monitoring bukan "Belum Upload" (lihat DemoDriveStore::children). Dengan begitu isi
+     * folder selalu diturunkan dari status sel — dan folder kosong yang diubah menjadi Complete tetap
+     * menampilkan file dummy yang deterministik. Setiap file membawa 'unit' (nama unit pemiliknya).
      */
-    private function addFiles(array &$nodes, array &$seq, string $parentId, string $period, string $key, string $prefix, bool $filled): array
+    private function addFiles(array &$nodes, array &$seq, string $parentId, string $period, string $key, string $prefix, bool $filled, string $unit): array
     {
-        if (! $filled) {
-            return ['count' => 0, 'sample' => null]; // unit belum upload → folder kosong
-        }
+        $latent = ! $filled;
 
         $cfg  = (array) config('demo.drive');
         $hash = $this->hash($key);
@@ -262,12 +264,15 @@ class DemoDriveTree
             $sizeBytes = ($minKb + intdiv($fileHash, 10) % ($maxKb - $minKb + 1)) * 1024;
             $stamp     = $this->stamp($period, $fileHash);
 
-            $id = $this->id('file', $seq);
-            $nodes[$id] = $this->node($id, $name, false, $parentId, 'file', $stamp, $stamp, $mime, $sizeBytes);
-            $sample ??= $name;
+            $id = $this->id($latent ? 'latent' : 'file', $seq);
+            $nodes[$id] = $this->node($id, $name, false, $parentId, 'file', $stamp, $stamp, $mime, $sizeBytes) + ['unit' => $unit, 'latent' => $latent];
+
+            if (! $latent) {
+                $sample ??= $name;
+            }
         }
 
-        return ['count' => $count, 'sample' => $sample];
+        return $latent ? ['count' => 0, 'sample' => null] : ['count' => $count, 'sample' => $sample];
     }
 
     private function node(string $id, string $name, bool $folder, string $parent, string $kind, string $created, string $modified, ?string $mime = null, int $size = 0): array
@@ -292,7 +297,7 @@ class DemoDriveTree
     {
         $seq[$type]++;
 
-        return 'demo_' . $type . '_' . str_pad((string) $seq[$type], $type === 'file' ? 5 : 4, '0', STR_PAD_LEFT);
+        return 'demo_' . $type . '_' . str_pad((string) $seq[$type], in_array($type, ['file', 'latent'], true) ? 5 : 4, '0', STR_PAD_LEFT);
     }
 
     private function hash(string $value): int

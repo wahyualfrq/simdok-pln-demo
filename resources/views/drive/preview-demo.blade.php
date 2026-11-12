@@ -49,7 +49,6 @@
             Berkas ini tidak berisi dokumen asli. Gunakan tombol Download untuk mengunduh berkas contoh.
         </p>
 
-        <x-demo-note class="mt-6 text-left"><strong>SIMULASI</strong> — pratinjau ini hanya placeholder milik SIMDOK. Tidak ada koneksi ke Google Drive sungguhan.</x-demo-note>
     </div>
 </div>
 

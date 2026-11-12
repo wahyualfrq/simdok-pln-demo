@@ -394,10 +394,6 @@
                        required
                        class="block w-full text-sm text-slate-700 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-pln-blue hover:file:bg-blue-100 border border-slate-200 rounded-xl cursor-pointer focus:outline-none focus:ring-2 focus:ring-pln-blue">
                 <p class="mt-1.5 text-xs text-slate-400">PDF, Word, Excel, PowerPoint, gambar, ZIP — Maks. 50 MB</p>
-                @if (config('demo.enabled'))
-                    {{-- DEMO: catatan upload simulasi --}}
-                    <x-demo-note class="mt-3">Upload hanya simulasi: isi file tidak disimpan, hanya nama dan ukurannya dicatat sementara. Batas ukuran pada versi demo: {{ rtrim(rtrim(number_format(config('demo.upload_max_kb') / 1024, 1), '0'), '.') }} MB.</x-demo-note>
-                @endif
             </div>
 
             @if (isset($folderStatus))
@@ -487,10 +483,6 @@
                 </div>
             </div>
 
-            @if (config('demo.enabled'))
-                {{-- DEMO: catatan buat folder simulasi --}}
-                <x-demo-note class="mb-4">Folder baru hanya tersimpan sementara di data demo dan tidak menyentuh Google Drive sungguhan.</x-demo-note>
-            @endif
 
             <div class="flex gap-2 justify-end pt-3 border-t border-slate-100">
                 <x-button variant="secondary" type="button" onclick="closeModal('modal-create-folder')">Batal</x-button>
@@ -508,10 +500,6 @@
             @csrf
             <input type="hidden" id="generate-folder-id" name="folder_id" value="{{ $folderId ?? '' }}">
 
-            @if (config('demo.enabled'))
-                {{-- DEMO: catatan simulasi Auto Generate --}}
-                <x-demo-note class="mb-4">Simulasi pemindaian — tidak membaca Google Drive sungguhan. Folder baru hanya dibuat pada data demo sementara.</x-demo-note>
-            @endif
 
             {{-- 1. Loading Preview Spinner --}}
             <div id="generate-loading-state" class="py-12 flex flex-col items-center justify-center">
@@ -653,10 +641,6 @@
 
             <div class="mb-6">
                 <p class="text-sm text-slate-600">Apakah Anda yakin ingin menghapus item ini? Tindakan ini tidak dapat dibatalkan dan item akan dihapus dari Google Drive.</p>
-                @if (config('demo.enabled'))
-                    {{-- DEMO: catatan hapus simulasi --}}
-                    <x-demo-note class="mt-3">Penghapusan hanya memengaruhi data simulasi sementara; tidak ada yang dihapus dari Google Drive sungguhan.</x-demo-note>
-                @endif
             </div>
 
             <div class="flex gap-2 justify-end">

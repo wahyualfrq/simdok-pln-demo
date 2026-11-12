@@ -70,6 +70,7 @@ class FakeGoogleDriveService extends GoogleDriveService
     public function __construct(
         private readonly DemoDriveStore $store,
         private readonly DemoPlaceholder $placeholder,
+        private readonly DemoUnitStatus $units,
     ) {}
 
     // ─────────────────────────────────────────────────────────
@@ -94,6 +95,8 @@ class FakeGoogleDriveService extends GoogleDriveService
 
     public function listFiles(string $parentId): array
     {
+        $this->units->syncSharedFolderStatus($parentId);
+
         return $this->shapeAll(
             array_filter($this->store->children($parentId), fn (array $n) => ! $n['folder']),
             self::FIELDS_LIST_FILES
@@ -206,6 +209,9 @@ class FakeGoogleDriveService extends GoogleDriveService
         }
 
         $node = $this->store->create($fileName, $folderId, false, $file->getMimeType() ?: 'application/octet-stream', $size);
+
+        // Unit "Belum Upload" yang menerima file menjadi PENDING (file ada, belum difinalisasi).
+        $this->units->setFolderStatus($folderId, DemoUnitStatus::PENDING, [DemoUnitStatus::INCOMPLETE]);
 
         Log::info('FakeGoogleDriveService::uploadFile (overlay demo, isi tidak disimpan)', ['fileName' => $fileName, 'folderId' => $folderId, 'fileId' => $node['id']]);
 

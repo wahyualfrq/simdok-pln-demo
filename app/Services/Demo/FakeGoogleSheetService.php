@@ -55,6 +55,7 @@ class FakeGoogleSheetService extends GoogleSheetService
         private readonly DemoDriveStore $demoStore,
         private readonly GoogleApiService $demoApi,
         private readonly GoogleDriveService $demoDrive,
+        private readonly DemoUnitStatus $demoUnits,
     ) {}
 
     // ─────────────────────────────────────────────────────────
@@ -99,6 +100,9 @@ class FakeGoogleSheetService extends GoogleSheetService
      */
     public function setChecklistValue(string $folderId, string $value): void
     {
+        // Status sel Monitoring ikut berubah (sumber kebenaran isi folder) — lihat DemoUnitStatus.
+        $this->demoUnits->applyChecklist($folderId, $value);
+
         $key = $this->slotKeyForFolder($folderId);
         if ($key === null) {
             return;
@@ -116,6 +120,8 @@ class FakeGoogleSheetService extends GoogleSheetService
     {
         if (! $this->demoDrive->hasFiles($folderId)) {
             $this->setChecklistValue($folderId, '');
+            // Folder kosong = "Belum Upload" (INCOMPLETE) pada sel Monitoring.
+            $this->demoUnits->setFolderStatus($folderId, DemoUnitStatus::INCOMPLETE);
         }
     }
 

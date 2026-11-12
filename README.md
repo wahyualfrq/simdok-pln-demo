@@ -50,9 +50,11 @@ Setiap halaman terkait diberi catatan **"demonstrasi"**; banner demo tampil di b
   dummy awal, sehingga mengubah footer atau status monitoring tidak mengubah isi PDF (ekspor Excel tetap dibuat
   sungguhan). Kode konversi dompdf tetap ada di `DemoPdfConverter::renderWithDompdf()` untuk membuat ulang PDF contoh.
 - **Unggah file maksimal ±4 MB** (batas body request fungsi Vercel ±4,5 MB). File tidak disimpan; hanya metadata.
-- **Status unit yang berubah setelah sinkronisasi bersifat per sesi** pada tampilan Drive, sedangkan tabel
-  monitoring ada di database yang dipakai bersama (per instance). Dua pengunjung dapat melihat kombinasi yang
-  sedikit berbeda.
+- **Status sel Monitoring dan isi folder Drive selalu konsisten dan bersifat per sesi.** Setiap pengunjung yang
+  login mendapat salinan database dan cache sendiri (`DemoSessionIsolation`), jadi mengubah status folder
+  (Belum Upload / Pending / Complete) tidak memengaruhi pengunjung lain. Sel *Belum Upload* = folder kosong;
+  Pending/Complete = folder berisi file dummy. Pada folder bersama (beberapa unit dalam satu folder region,
+  mis. KANTOR UID) perubahan status berlaku untuk semua unit di folder itu.
 - **Kasus tepi 409:** bila sinkronisasi/generate sudah melewati durasi simulasinya tetapi halaman tidak melakukan
   polling, permintaan berikutnya dapat dijawab 409 ("sedang berjalan") sekali sebelum status diperbarui.
 - Template Excel memuat beberapa unit yang tidak ada di konfigurasi struktur folder, sehingga barisnya muncul
